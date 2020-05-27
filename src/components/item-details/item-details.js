@@ -65,8 +65,8 @@ export default class ItemDetails extends Component {
     const { item, image } = this.state;
     const { name } = item; 
     return (
-      <div className="person-details card">
-        <img className="person-image" alt="Person icon"
+      <div className="item-details card">
+        <img className="item-image" alt="Person icon"
             src={ image } />
               
         <div className="card-body">
