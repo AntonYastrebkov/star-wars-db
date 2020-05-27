@@ -8,8 +8,11 @@ import PersonPage from '../person-page';
 import Row from '../row';
 import ItemDetails, { Record } from '../item-details/item-details';
 import ErrorButton from '../error-button';
+import { SwapiServiceProvider } from '../swapi-service-context';
+
 
 import './app.css';
+import ErrorBoundry from '../error-boundry';
 
 export default class App extends Component {
   swapiService = new SwapiService();
@@ -68,24 +71,28 @@ export default class App extends Component {
     );
 
     return (
-      <div className="stardb-app">
-        <AppHeader />
-        { randomPlanet }
-                
-        <div className="row mb2 btn-row">
-          <button
-              className="btn btn-warning btn-lg"
-              onClick={this.showRandomPlanet}>
-            Toggle random planet
-          </button>
-          <ErrorButton />
-        </div>
+      <ErrorBoundry>
+        <SwapiServiceProvider value={this.swapiService}>
+          <div className="stardb-app">
+            <AppHeader />
+            { randomPlanet }
+                    
+            <div className="row mb2 btn-row">
+              <button
+                  className="btn btn-warning btn-lg"
+                  onClick={this.showRandomPlanet}>
+                Toggle random planet
+              </button>
+              <ErrorButton />
+            </div>
 
-        <PersonPage />
+            <PersonPage />
 
-        <Row
-            left={personDetails} right={starshipDetails} />
-      </div>
+            <Row
+                left={personDetails} right={starshipDetails} />
+          </div>
+        </SwapiServiceProvider>
+      </ErrorBoundry>
     );
   }
 };
