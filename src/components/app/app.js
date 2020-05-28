@@ -16,17 +16,8 @@ import './app.css';
 export default class App extends Component {
   
   state = {
-    isShowRandomPlanet: true,
     hasError: false,
     swapiService: new SwapiService()
-  };
-
-  showRandomPlanet = () => {
-    this.setState((state) => {
-      return {
-        isShowRandomPlanet: !state.isShowRandomPlanet
-      };
-    });
   };
 
   onServiceChange = () => {
@@ -48,9 +39,8 @@ export default class App extends Component {
       return <ErrorIndicator />;
     }
 
-    const Planet = this.state.isShowRandomPlanet ? 
-      withSwapiService((swapiService) => {return {getPlanet: swapiService.getPlanet}})
-        (RandomPlanet) : null;
+    const Planet = withSwapiService((swapiService) => {return {getPlanet: swapiService.getPlanet}})
+                      (RandomPlanet);
 
     return (
       <ErrorBoundry>
@@ -60,11 +50,6 @@ export default class App extends Component {
             <Planet />
                     
             <div className="row mb2 btn-row">
-              <button
-                  className="btn btn-warning btn-lg"
-                  onClick={this.showRandomPlanet}>
-                Toggle random planet
-              </button>
               <ErrorButton />
             </div>
 
